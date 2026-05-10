@@ -122,6 +122,13 @@ final class ModelDownloadManager: NSObject, URLSessionDownloadDelegate {
             }
             try fileManager.moveItem(at: location, to: destinationURL)
 
+            if !ModelFileValidator.isValidTaskFile(atPath: destinationURL.path) {
+                try? fileManager.removeItem(at: destinationURL)
+                activeTasks.removeValue(forKey: modelId)
+                statePublisher.send((modelId, .failed(error: "Download failed: received invalid file. This model may require authentication (gated model).")))
+                return
+            }
+
             activeTasks.removeValue(forKey: modelId)
             statePublisher.send((modelId, .completed))
             print("[Download] Complete: \(fileName)")

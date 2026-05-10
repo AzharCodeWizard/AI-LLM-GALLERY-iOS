@@ -42,6 +42,12 @@ final class LlmInferenceManager: ObservableObject {
             return
         }
 
+        if !ModelFileValidator.isValidTaskFile(atPath: modelPath) {
+            modelState = .error(message: "Model file is corrupted or invalid. Please delete and re-download.")
+            try? FileManager.default.removeItem(atPath: modelPath)
+            return
+        }
+
         let fileName = (modelPath as NSString).lastPathComponent
         let displayName = fileName
             .replacingOccurrences(of: ".task", with: "")
@@ -199,5 +205,23 @@ final class LlmInferenceManager: ObservableObject {
             try? FileManager.default.createDirectory(at: modelsDir, withIntermediateDirectories: true, attributes: nil)
         }
         return modelsDir
+    }
+
+}
+
+enum ModelFileValidator {
+    static func isValidTaskFile(atPath path: String) -> Bool {
+        guard let fileHandle = FileHandle(forReadingAtPath: path) else { return false }
+        defer { fileHandle.closeFile() }
+
+        let header = fileHandle.readData(ofLength: 4)
+        guard header.count >= 4 else { return false }
+
+        let zipMagic: [UInt8] = [0x50, 0x4B, 0x03, 0x04]
+        let fileBytes = [UInt8](header)
+        return fileBytes[0] == zipMagic[0]
+            && fileBytes[1] == zipMagic[1]
+            && fileBytes[2] == zipMagic[2]
+            && fileBytes[3] == zipMagic[3]
     }
 }
