@@ -211,17 +211,29 @@ final class LlmInferenceManager: ObservableObject {
 
 enum ModelFileValidator {
     static func isValidTaskFile(atPath path: String) -> Bool {
+        guard let attrs = try? FileManager.default.attributesOfItem(atPath: path),
+              let sizeNumber = attrs[.size] as? NSNumber else {
+            return false
+        }
+        let fileSize = sizeNumber.int64Value
+
+        if fileSize < 1_000_000 {
+            return false
+        }
+
         guard let fileHandle = FileHandle(forReadingAtPath: path) else { return false }
         defer { fileHandle.closeFile() }
 
-        let header = fileHandle.readData(ofLength: 4)
-        guard header.count >= 4 else { return false }
+        let header = fileHandle.readData(ofLength: 32)
+        guard let headerString = String(data: header, encoding: .utf8) else {
+            return true
+        }
 
-        let zipMagic: [UInt8] = [0x50, 0x4B, 0x03, 0x04]
-        let fileBytes = [UInt8](header)
-        return fileBytes[0] == zipMagic[0]
-            && fileBytes[1] == zipMagic[1]
-            && fileBytes[2] == zipMagic[2]
-            && fileBytes[3] == zipMagic[3]
+        let lower = headerString.lowercased()
+        if lower.contains("<!doctype") || lower.contains("<html") || lower.contains("access denied") {
+            return false
+        }
+
+        return true
     }
 }
