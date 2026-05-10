@@ -49,29 +49,23 @@
 		2E53D6082FAFC8AA0027E9E5 /* AI LLM GALLERY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AI LLM GALLERY.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E53D6152FAFC8AB0027E9E5 /* AI LLM GALLERYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AI LLM GALLERYTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E53D61F2FAFC8AB0027E9E5 /* AI LLM GALLERYUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AI LLM GALLERYUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		63042F1EC256F7BAD1BE7617 /* MediaPipeTasksGenAI.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = MediaPipeTasksGenAI.xcframework; path = Frameworks/MediaPipeTasksGenAI.xcframework; sourceTree = "<group>"; };
-		A208FA8073292B1C1EDA831B /* MediaPipeTasksGenAIC.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = MediaPipeTasksGenAIC.xcframework; path = Frameworks/MediaPipeTasksGenAIC.xcframework; sourceTree = "<group>"; };
+		63042F1EC256F7BAD1BE7617 /* MediaPipeTasksGenAI.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = MediaPipeTasksGenAI.xcframework; path = Frameworks/MediaPipeTasksGenAI.xcframework; sourceTree = "<group>"; };
+		A208FA8073292B1C1EDA831B /* MediaPipeTasksGenAIC.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = MediaPipeTasksGenAIC.xcframework; path = Frameworks/MediaPipeTasksGenAIC.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2E53D60A2FAFC8AA0027E9E5 /* AI LLM GALLERY */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = "AI LLM GALLERY";
 			sourceTree = "<group>";
 		};
 		2E53D6182FAFC8AB0027E9E5 /* AI LLM GALLERYTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = "AI LLM GALLERYTests";
 			sourceTree = "<group>";
 		};
 		2E53D6222FAFC8AB0027E9E5 /* AI LLM GALLERYUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = "AI LLM GALLERYUITests";
 			sourceTree = "<group>";
 		};

@@ -32,10 +32,12 @@ final class ChatViewModel: ObservableObject {
         guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
         guard !isLoading else { return }
 
+        let attachedImage = selectedImage
+
         let userMessage = ChatMessage(
             text: text,
             isUser: true,
-            image: selectedImage
+            image: attachedImage
         )
         messages.append(userMessage)
         selectedImage = nil
@@ -50,9 +52,20 @@ final class ChatViewModel: ObservableObject {
         messages.append(aiMessage)
         isLoading = true
 
-        let prompt = buildPrompt(userText: text)
-
         Task {
+            var visionContext = ""
+
+            if let image = attachedImage {
+                if let index = messages.firstIndex(where: { $0.id == aiMessageId }) {
+                    messages[index].text = "🔍 Analyzing image..."
+                }
+
+                let analysis = await VisionAnalyzer.analyze(image: image)
+                visionContext = analysis.summary
+            }
+
+            let prompt = buildPrompt(userText: text, visionContext: visionContext)
+
             let startTime = Date()
             var fullResponse = ""
 
@@ -82,8 +95,21 @@ final class ChatViewModel: ObservableObject {
         selectedImage = nil
     }
 
-    private func buildPrompt(userText: String) -> String {
-        var prompt = "<|im_start|>system\n\(capability.systemPrompt)\n<|im_end|>\n"
+    private func buildPrompt(userText: String, visionContext: String = "") -> String {
+        var systemContent = capability.systemPrompt
+
+        if !visionContext.isEmpty {
+            systemContent += """
+            
+            
+            The user has attached an image. Apple Vision framework has analyzed it and found the following:
+            \(visionContext)
+            
+            Use this analysis to answer the user's question about the image. Be specific and helpful based on what was detected. If the user asks about something not found in the analysis, let them know what you can see instead.
+            """
+        }
+
+        var prompt = "<|im_start|>system\n\(systemContent)\n<|im_end|>\n"
 
         let historyMessages = Array(messages.dropLast(2).suffix(10))
         for msg in historyMessages {
