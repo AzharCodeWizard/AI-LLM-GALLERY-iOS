@@ -1,8 +1,3 @@
-//
-//  SettingsViewModel.swift
-//  AI LLM GALLERY
-//
-
 import SwiftUI
 import Combine
 
@@ -41,9 +36,5 @@ final class SettingsViewModel: ObservableObject {
             _ = llmManager.deleteModel(fileName: model.lastPathComponent)
         }
         refreshModels()
-    }
-
-    func activateDemoMode() {
-        llmManager.initializeMock("Demo Engine (Manual)")
     }
 }

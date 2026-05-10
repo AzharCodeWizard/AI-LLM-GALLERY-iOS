@@ -1,8 +1,3 @@
-//
-//  SettingsView.swift
-//  AI LLM GALLERY
-//
-
 import SwiftUI
 
 struct SettingsView: View {
@@ -14,13 +9,11 @@ struct SettingsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                // ── Active Model ──
                 sectionHeader("Active Model")
                 settingsCard {
                     settingsItem(icon: "cpu", title: "Current AI Engine", subtitle: viewModel.activeModelName)
                 }
 
-                // ── Model Hub Button ──
                 sectionHeader("Model Hub")
                 Button(action: onModelHubClick) {
                     HStack(spacing: 8) {
@@ -32,25 +25,6 @@ struct SettingsView: View {
                     .background(Color.appPrimary).clipShape(RoundedRectangle(cornerRadius: 16))
                 }
 
-                // ── Demo Mode ──
-                sectionHeader("Demo Mode")
-                settingsCard {
-                    HStack(spacing: 16) {
-                        Image(systemName: "flask").font(.system(size: 20)).foregroundColor(.appPrimary).frame(width: 24)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Activate Demo Engine").font(.system(size: 14, weight: .medium)).foregroundColor(.appOnSurface)
-                            Text("Use a simulated AI engine to test the app without downloading a model.").font(.system(size: 12)).foregroundColor(.appOnSurfaceVariant)
-                        }
-                        Spacer()
-                        Button("Activate") { viewModel.activateDemoMode() }
-                            .font(.system(size: 13, weight: .medium))
-                            .foregroundColor(.appPrimary)
-                            .padding(.horizontal, 14).padding(.vertical, 8)
-                            .background(RoundedRectangle(cornerRadius: 12).stroke(Color.appPrimary, lineWidth: 1))
-                    }.padding(16)
-                }
-
-                // ── Downloaded Models ──
                 sectionHeader("Downloaded Models (\(viewModel.downloadedModels.count))")
                 if viewModel.downloadedModels.isEmpty {
                     settingsCard {
@@ -86,7 +60,6 @@ struct SettingsView: View {
                     }
                 }
 
-                // ── Manual Setup ──
                 sectionHeader("Manual Model Setup")
                 settingsCard {
                     VStack(alignment: .leading, spacing: 12) {
@@ -97,7 +70,6 @@ struct SettingsView: View {
                     }.padding(16)
                 }
 
-                // ── About ──
                 sectionHeader("About")
                 settingsCard {
                     VStack(spacing: 0) {
@@ -109,7 +81,6 @@ struct SettingsView: View {
                     }
                 }
 
-                // ── Developer ──
                 sectionHeader("Developer")
                 settingsCard {
                     settingsItem(icon: "chevron.left.forwardslash.chevron.right", title: "Developed by Azhar", subtitle: "Made with ❤️ in India 🇮🇳")
@@ -131,7 +102,6 @@ struct SettingsView: View {
         .onAppear { viewModel.refreshModels() }
     }
 
-    // MARK: - Helpers
     private func sectionHeader(_ title: String) -> some View {
         Text(title).font(.system(size: 14, weight: .semibold)).foregroundColor(.appPrimary).padding(.top, 8)
     }

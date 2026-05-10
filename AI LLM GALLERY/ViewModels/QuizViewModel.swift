@@ -60,7 +60,7 @@ final class QuizViewModel: ObservableObject {
                     throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "The model returned an empty response."])
                 }
 
-                var cleanJson = responseJson
+                let cleanJson = responseJson
                     .replacingOccurrences(of: "```json", with: "")
                     .replacingOccurrences(of: "```", with: "")
                     .replacingOccurrences(of: "<|im_end|>", with: "")
