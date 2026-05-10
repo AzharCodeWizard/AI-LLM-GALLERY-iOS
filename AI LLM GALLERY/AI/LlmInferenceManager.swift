@@ -58,7 +58,15 @@ final class LlmInferenceManager: ObservableObject {
         #if canImport(MediaPipeTasksGenAI)
         do {
             let options = LlmInference.Options(modelPath: modelPath)
-            options.maxTokens = 2048
+            
+            // Dynamically determine maxTokens based on the filename (e.g. ekv4096 -> 4096)
+            if let range = fileName.range(of: "(?<=ekv)\\d+", options: .regularExpression),
+               let maxTokens = Int(fileName[range]) {
+                options.maxTokens = maxTokens
+            } else {
+                options.maxTokens = 1280 // Match default ekv1280
+            }
+            
             options.maxTopk = 40
 
             self.llmInference = try LlmInference(options: options)

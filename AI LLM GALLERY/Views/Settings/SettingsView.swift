@@ -72,6 +72,10 @@ struct SettingsView: View {
                             .onTapGesture { viewModel.selectModel(fileURL) }
                         }
                     }
+                    if let error = viewModel.initializationError {
+                        Text("⚠️ \(error)").font(.system(size: 13)).foregroundColor(.appError)
+                            .padding(.top, 4).padding(.horizontal, 16).padding(.bottom, 12)
+                    }
                     Button(action: { viewModel.clearAllModels() }) {
                         Text("Clear All Models").font(.system(size: 14, weight: .medium))
                             .foregroundColor(.appError).frame(maxWidth: .infinity).frame(height: 44)
