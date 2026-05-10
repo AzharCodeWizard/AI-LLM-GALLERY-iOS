@@ -43,7 +43,12 @@ final class ModelDownloadManager: NSObject, URLSessionDownloadDelegate {
             return
         }
 
-        let task = session.downloadTask(with: url)
+        var request = URLRequest(url: url)
+        if model.isGated, let token = UserDefaults.standard.string(forKey: "hfToken"), !token.isEmpty {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+
+        let task = session.downloadTask(with: request)
         activeTasks[model.id] = task
         modelMapping[task.taskIdentifier] = model.id
         modelFileNames[model.id] = model.fileName

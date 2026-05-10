@@ -15,6 +15,25 @@ struct SettingsView: View {
                 }
 
                 sectionHeader("Model Hub")
+                settingsCard {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Authentication (Optional)")
+                            .font(.system(size: 14, weight: .medium)).foregroundColor(.appOnSurface)
+                        
+                        SecureField("Paste Hugging Face Token (hf_...)", text: Binding(
+                            get: { UserDefaults.standard.string(forKey: "hfToken") ?? "" },
+                            set: { UserDefaults.standard.set($0, forKey: "hfToken") }
+                        ))
+                        .font(.system(size: 14))
+                        .padding(12)
+                        .background(RoundedRectangle(cornerRadius: 8).stroke(Color.appOutline, lineWidth: 1))
+                        
+                        Text("Required for gated models like Gemma 3.")
+                            .font(.system(size: 11)).foregroundColor(.appOnSurfaceVariant)
+                    }
+                    .padding(16)
+                }
+
                 Button(action: onModelHubClick) {
                     HStack(spacing: 8) {
                         Image(systemName: "arrow.down.circle").font(.system(size: 17))
