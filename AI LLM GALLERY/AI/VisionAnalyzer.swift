@@ -6,7 +6,6 @@ struct VisionAnalysisResult {
     var detectedText: [String] = []
     var faceCount: Int = 0
     var animalLabels: [String] = []
-    var isSalient: Bool = false
 
     var summary: String {
         var parts: [String] = []
@@ -46,99 +45,41 @@ final class VisionAnalyzer {
 
         let orientation = cgImageOrientation(from: image.imageOrientation)
 
-        async let classificationResult = runClassification(cgImage: cgImage, orientation: orientation)
-        async let textResult = runTextRecognition(cgImage: cgImage, orientation: orientation)
-        async let faceResult = runFaceDetection(cgImage: cgImage, orientation: orientation)
-        async let animalResult = runAnimalRecognition(cgImage: cgImage, orientation: orientation)
-
-        let (labels, text, faces, animals) = await (classificationResult, textResult, faceResult, animalResult)
-
-        return VisionAnalysisResult(
-            labels: labels,
-            detectedText: text,
-            faceCount: faces,
-            animalLabels: animals
-        )
-    }
-
-    private static func runClassification(cgImage: CGImage, orientation: CGImagePropertyOrientation) async -> [String] {
-        await withCheckedContinuation { continuation in
-            let request = VNClassifyImageRequest { request, error in
-                guard let results = request.results as? [VNClassificationObservation] else {
-                    continuation.resume(returning: [])
-                    return
-                }
-                let topLabels = results
-                    .filter { $0.confidence > 0.3 }
-                    .prefix(8)
-                    .map { "\($0.identifier.replacingOccurrences(of: "_", with: " ")) (\(Int($0.confidence * 100))%)" }
-                continuation.resume(returning: Array(topLabels))
-            }
-
+        return await Task.detached {
             let handler = VNImageRequestHandler(cgImage: cgImage, orientation: orientation, options: [:])
+
+            let classifyRequest = VNClassifyImageRequest()
+            let textRequest = VNRecognizeTextRequest()
+            textRequest.recognitionLevel = .accurate
+            let faceRequest = VNDetectFaceRectanglesRequest()
+            let animalRequest = VNRecognizeAnimalsRequest()
+
             do {
-                try handler.perform([request])
+                try handler.perform([classifyRequest, textRequest, faceRequest, animalRequest])
             } catch {
-                continuation.resume(returning: [])
-            }
-        }
-    }
-
-    private static func runTextRecognition(cgImage: CGImage, orientation: CGImagePropertyOrientation) async -> [String] {
-        await withCheckedContinuation { continuation in
-            let request = VNRecognizeTextRequest { request, error in
-                guard let results = request.results as? [VNRecognizedTextObservation] else {
-                    continuation.resume(returning: [])
-                    return
-                }
-                let texts = results.compactMap { $0.topCandidates(1).first?.string }
-                continuation.resume(returning: texts)
-            }
-            request.recognitionLevel = .accurate
-
-            let handler = VNImageRequestHandler(cgImage: cgImage, orientation: orientation, options: [:])
-            do {
-                try handler.perform([request])
-            } catch {
-                continuation.resume(returning: [])
-            }
-        }
-    }
-
-    private static func runFaceDetection(cgImage: CGImage, orientation: CGImagePropertyOrientation) async -> Int {
-        await withCheckedContinuation { continuation in
-            let request = VNDetectFaceRectanglesRequest { request, error in
-                let count = (request.results as? [VNFaceObservation])?.count ?? 0
-                continuation.resume(returning: count)
+                return VisionAnalysisResult()
             }
 
-            let handler = VNImageRequestHandler(cgImage: cgImage, orientation: orientation, options: [:])
-            do {
-                try handler.perform([request])
-            } catch {
-                continuation.resume(returning: 0)
-            }
-        }
-    }
+            let labels: [String] = (classifyRequest.results as? [VNClassificationObservation] ?? [])
+                .filter { $0.confidence > 0.3 }
+                .prefix(8)
+                .map { "\($0.identifier.replacingOccurrences(of: "_", with: " ")) (\(Int($0.confidence * 100))%)" }
 
-    private static func runAnimalRecognition(cgImage: CGImage, orientation: CGImagePropertyOrientation) async -> [String] {
-        await withCheckedContinuation { continuation in
-            let request = VNRecognizeAnimalsRequest { request, error in
-                guard let results = request.results as? [VNRecognizedObjectObservation] else {
-                    continuation.resume(returning: [])
-                    return
-                }
-                let animals = results.flatMap { $0.labels.map { $0.identifier } }
-                continuation.resume(returning: animals)
-            }
+            let detectedText: [String] = (textRequest.results as? [VNRecognizedTextObservation] ?? [])
+                .compactMap { $0.topCandidates(1).first?.string }
 
-            let handler = VNImageRequestHandler(cgImage: cgImage, orientation: orientation, options: [:])
-            do {
-                try handler.perform([request])
-            } catch {
-                continuation.resume(returning: [])
-            }
-        }
+            let faceCount = (faceRequest.results as? [VNFaceObservation])?.count ?? 0
+
+            let animalLabels: [String] = (animalRequest.results as? [VNRecognizedObjectObservation] ?? [])
+                .flatMap { $0.labels.map { $0.identifier } }
+
+            return VisionAnalysisResult(
+                labels: Array(labels),
+                detectedText: detectedText,
+                faceCount: faceCount,
+                animalLabels: animalLabels
+            )
+        }.value
     }
 
     private static func cgImageOrientation(from uiOrientation: UIImage.Orientation) -> CGImagePropertyOrientation {
