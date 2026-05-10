@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		238A036C66BB1305EC2E1B20 /* MediaPipeTasksGenAI.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63042F1EC256F7BAD1BE7617 /* MediaPipeTasksGenAI.xcframework */; };
+		37ABD0A27E1CCD4CEA574F04 /* MediaPipeTasksGenAI.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63042F1EC256F7BAD1BE7617 /* MediaPipeTasksGenAI.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7080D939B5FB38C3F5AF3766 /* MediaPipeTasksGenAIC.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A208FA8073292B1C1EDA831B /* MediaPipeTasksGenAIC.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F9817298861D1FDED779A31C /* MediaPipeTasksGenAIC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A208FA8073292B1C1EDA831B /* MediaPipeTasksGenAIC.xcframework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		2E53D6162FAFC8AB0027E9E5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -23,25 +30,48 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		0057294D0D3CF4BE521901D6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				37ABD0A27E1CCD4CEA574F04 /* MediaPipeTasksGenAI.xcframework in Embed Frameworks */,
+				7080D939B5FB38C3F5AF3766 /* MediaPipeTasksGenAIC.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		2E53D6082FAFC8AA0027E9E5 /* AI LLM GALLERY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AI LLM GALLERY.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E53D6152FAFC8AB0027E9E5 /* AI LLM GALLERYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AI LLM GALLERYTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E53D61F2FAFC8AB0027E9E5 /* AI LLM GALLERYUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AI LLM GALLERYUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		63042F1EC256F7BAD1BE7617 /* MediaPipeTasksGenAI.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = MediaPipeTasksGenAI.xcframework; path = Frameworks/MediaPipeTasksGenAI.xcframework; sourceTree = "<group>"; };
+		A208FA8073292B1C1EDA831B /* MediaPipeTasksGenAIC.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = MediaPipeTasksGenAIC.xcframework; path = Frameworks/MediaPipeTasksGenAIC.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2E53D60A2FAFC8AA0027E9E5 /* AI LLM GALLERY */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = "AI LLM GALLERY";
 			sourceTree = "<group>";
 		};
 		2E53D6182FAFC8AB0027E9E5 /* AI LLM GALLERYTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = "AI LLM GALLERYTests";
 			sourceTree = "<group>";
 		};
 		2E53D6222FAFC8AB0027E9E5 /* AI LLM GALLERYUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = "AI LLM GALLERYUITests";
 			sourceTree = "<group>";
 		};
@@ -52,6 +82,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				238A036C66BB1305EC2E1B20 /* MediaPipeTasksGenAI.xcframework in Frameworks */,
+				F9817298861D1FDED779A31C /* MediaPipeTasksGenAIC.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +111,7 @@
 				2E53D6182FAFC8AB0027E9E5 /* AI LLM GALLERYTests */,
 				2E53D6222FAFC8AB0027E9E5 /* AI LLM GALLERYUITests */,
 				2E53D6092FAFC8AA0027E9E5 /* Products */,
+				EEBC43258F1B0299E13139E4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,6 +125,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		EEBC43258F1B0299E13139E4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				63042F1EC256F7BAD1BE7617 /* MediaPipeTasksGenAI.xcframework */,
+				A208FA8073292B1C1EDA831B /* MediaPipeTasksGenAIC.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -102,6 +144,7 @@
 				2E53D6042FAFC8AA0027E9E5 /* Sources */,
 				2E53D6052FAFC8AA0027E9E5 /* Frameworks */,
 				2E53D6062FAFC8AA0027E9E5 /* Resources */,
+				0057294D0D3CF4BE521901D6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -111,8 +154,6 @@
 				2E53D60A2FAFC8AA0027E9E5 /* AI LLM GALLERY */,
 			);
 			name = "AI LLM GALLERY";
-			packageProductDependencies = (
-			);
 			productName = "AI LLM GALLERY";
 			productReference = 2E53D6082FAFC8AA0027E9E5 /* AI LLM GALLERY.app */;
 			productType = "com.apple.product-type.application";
@@ -134,8 +175,6 @@
 				2E53D6182FAFC8AB0027E9E5 /* AI LLM GALLERYTests */,
 			);
 			name = "AI LLM GALLERYTests";
-			packageProductDependencies = (
-			);
 			productName = "AI LLM GALLERYTests";
 			productReference = 2E53D6152FAFC8AB0027E9E5 /* AI LLM GALLERYTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -157,8 +196,6 @@
 				2E53D6222FAFC8AB0027E9E5 /* AI LLM GALLERYUITests */,
 			);
 			name = "AI LLM GALLERYUITests";
-			packageProductDependencies = (
-			);
 			productName = "AI LLM GALLERYUITests";
 			productReference = 2E53D61F2FAFC8AB0027E9E5 /* AI LLM GALLERYUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -396,6 +433,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -407,6 +448,21 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+					"-framework",
+					Accelerate,
+					"-framework",
+					CoreVideo,
+					"-framework",
+					Metal,
+					"-framework",
+					OpenGLES,
+					"-force_load",
+					"\"$(SRCROOT)/Frameworks/genai_libraries/libMediaPipeTasksGenAIC_simulator.a\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.azhar.AI-LLM-GALLERY";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -427,6 +483,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -438,6 +498,21 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+					"-framework",
+					Accelerate,
+					"-framework",
+					CoreVideo,
+					"-framework",
+					Metal,
+					"-framework",
+					OpenGLES,
+					"-force_load",
+					"\"$(SRCROOT)/Frameworks/genai_libraries/libMediaPipeTasksGenAIC_simulator.a\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.azhar.AI-LLM-GALLERY";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

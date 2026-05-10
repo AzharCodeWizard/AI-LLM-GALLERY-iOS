@@ -2,23 +2,20 @@
 //  ContentView.swift
 //  AI LLM GALLERY
 //
-//  Created by Azhar on 10/05/26.
+//  This file is no longer used — the app entry point is now AppNavigation.
+//  Kept for backwards compatibility with Xcode file references.
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        AppNavigation()
     }
 }
 
 #Preview {
     ContentView()
+        .modelContainer(for: [Quiz.self, Question.self, Story.self])
 }

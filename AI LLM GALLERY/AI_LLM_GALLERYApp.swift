@@ -6,12 +6,23 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct AI_LLM_GALLERYApp: App {
+
+    init() {
+        // Ensure Application Support directory exists before SwiftData tries to create the store
+        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        if !FileManager.default.fileExists(atPath: appSupport.path) {
+            try? FileManager.default.createDirectory(at: appSupport, withIntermediateDirectories: true)
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppNavigation()
         }
+        .modelContainer(for: [Quiz.self, Question.self, Story.self])
     }
 }

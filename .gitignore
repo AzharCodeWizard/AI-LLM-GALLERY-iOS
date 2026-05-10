@@ -1,0 +1,15 @@
+# Xcode
+build/
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+*.xcworkspace/*
+!*.xcworkspace/contents.xcworkspacedata
+
+# Large Frameworks (exceed GitHub 100MB limit)
+Frameworks/genai_libraries/
+Frameworks/MediaPipeTasksGenAI*/
+
+# OS
+.DS_Store
